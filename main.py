@@ -1,7 +1,12 @@
 import tkinter as tk
-import funcs
 
-COUNT = 0
+
+def get_name():
+    value = name.get()
+    if value:
+        print(value)
+    else:
+        print("Empty")
 
 
 win = tk.Tk()
@@ -11,46 +16,15 @@ win.config(bg="#153023")
 win.title("My first GUI")
 win.geometry("500x600+500+10")
 
-def new_label():
-    label = tk.Label(win, text="Petuh",
-                     bg="black",
-                     fg='yellow',
-                     font=("Arial", 15, "bold"),
-                     relief=tk.RIDGE
-                     )
-    label.pack()
+tk.Label(win, text="Name", bg="#153023").grid(row=0, column=0, stick='w')
+name = tk.Entry(win, show="1")
+tk.Button(win, text='Get', command=get_name).grid(row=1, column=0, stick='we')
+tk.Button(win, text='Del', command=lambda: name.delete(0, tk.END)).grid(row=1, column=1, stick='we')
+tk.Button(win, text='Insert "Hello!"', command=lambda: name.insert(0, "Hello!")).grid(row=2, columnspan=2, stick='we')
 
-def counter():
-    global COUNT
-    COUNT += 1
-    btn2["text"] = COUNT
+name.grid(row=0, column=1)
 
-def disabler():
-    btn2['state'] = tk.DISABLED
-    btn3["text"] = "Undisable"
-    btn3["command"] = undisabler
-
-def undisabler():
-    btn2['state'] = tk.ACTIVE
-    btn3["text"] = "Disable"
-    btn3["command"] = disabler
-
-
-btn1 = tk.Button(win, text="Make a new label!",
-                 command=new_label)
-
-btn2 = tk.Button(win, text="Count!",
-                 command=counter,
-                 bg="red",
-                 activebackground="Blue",
-                 state=tk.DISABLED)
-
-btn3 = tk.Button(win, text='Undisable',
-                 command=undisabler)
-
-btn1.pack()
-btn2.pack()
-btn3.pack()
+win.grid_columnconfigure(0, minsize=50)
 
 if __name__ == "__main__":
     win.mainloop()
