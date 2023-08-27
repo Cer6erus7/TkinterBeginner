@@ -1,12 +1,24 @@
 import tkinter as tk
 
 
-def get_name():
-    value = name.get()
-    if value:
-        print(value)
-    else:
-        print("Empty")
+def select_all():
+    for check in [over_18, commercial, follow]:
+        check.select()
+
+
+def deselect_all():
+    for check in [over_18, commercial, follow]:
+        check.deselect()
+
+
+def switch_all():
+    for check in [over_18, commercial, follow]:
+        check.toggle()
+
+
+def show():
+    print("Flag 18", over_18_value.get())
+    print("Commercial", commercial_value.get())
 
 
 win = tk.Tk()
@@ -16,13 +28,32 @@ win.config(bg="#153023")
 win.title("My first GUI")
 win.geometry("500x600+500+10")
 
-tk.Label(win, text="Name", bg="#153023").grid(row=0, column=0, stick='w')
-name = tk.Entry(win, show="1")
-tk.Button(win, text='Get', command=get_name).grid(row=1, column=0, stick='we')
-tk.Button(win, text='Del', command=lambda: name.delete(0, tk.END)).grid(row=1, column=1, stick='we')
-tk.Button(win, text='Insert "Hello!"', command=lambda: name.insert(0, "Hello!")).grid(row=2, columnspan=2, stick='we')
+over_18_value = tk.StringVar()
+over_18_value.set("No!")
+commercial_value = tk.IntVar()
 
-name.grid(row=0, column=1)
+over_18 = tk.Checkbutton(win, text='Are you over 18?',
+                         variable=over_18_value,
+                         onvalue="Yes!",
+                         offvalue="No!")
+commercial = tk.Checkbutton(win, text="Do you want to take ad?",
+                            variable=commercial_value,
+                            onvalue=1,
+                            offvalue=0)
+follow = tk.Checkbutton(win, text="Do you want to follow the chanel?", indicatoron=False)
+
+over_18.pack()
+commercial.pack()
+follow.pack()
+
+btn = tk.Button(win, text="Select all!", command=select_all)
+btn.pack()
+btn1 = tk.Button(win, text="Deselect all!", command=deselect_all)
+btn1.pack()
+btn2 = tk.Button(win, text="Switch all!", command=switch_all)
+btn2.pack()
+btn3 = tk.Button(win, text="Show", command=show)
+btn3.pack()
 
 win.grid_columnconfigure(0, minsize=50)
 
